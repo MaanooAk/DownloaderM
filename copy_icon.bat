@@ -1,0 +1,1 @@
+copy assets\icon.png src\com\maanoo\downloaderm\face\icon.png

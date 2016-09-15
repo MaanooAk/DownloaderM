@@ -1,0 +1,1 @@
+java -jar "dist/Downloader M.jar" "http://download.thinkbroadband.com/10MB.zip" "C:\Users\Akritas\Desktop\10MB.zip"

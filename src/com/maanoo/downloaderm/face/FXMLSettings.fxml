@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="320.0" maxWidth="550.0" minHeight="320.0" minWidth="450.0" prefHeight="320.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLSettingsController">
+   <center>
+      <GridPane hgap="14.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Default Download folder" />
+            <Label text="Maximum Connections" GridPane.rowIndex="1" />
+            <Label text="Minimum Connection download size" GridPane.rowIndex="2" />
+            <TextField fx:id="tfFolder" GridPane.columnIndex="1" />
+            <TextField fx:id="tfMaxConnections" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfMinBytes" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="butFolder" mnemonicParsing="false" onAction="#actFolder" prefWidth="40.0" text="..." GridPane.columnIndex="2" />
+            <Label text="Status Refresh rate" GridPane.rowIndex="5" />
+            <TextField fx:id="tfRefreshRate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="B" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="ms" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Label text="Download Buffers per Connection" GridPane.rowIndex="3" />
+            <Label text="Download Buffer size" GridPane.rowIndex="4" />
+            <TextField fx:id="tfBuffers" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="tfBufferSize" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="B" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+         </children>
+         <padding>
+            <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="67.0" prefWidth="519.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="butStore" defaultButton="true" layoutX="453.0" layoutY="21.0" mnemonicParsing="false" onAction="#actStore" prefHeight="25.0" prefWidth="118.0" text="Store settings" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <Separator layoutX="160.0" layoutY="13.0" prefWidth="200.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="butCancel" cancelButton="true" layoutX="325.0" layoutY="28.0" mnemonicParsing="false" onAction="#actCancel" text="Cancel" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="142.0" />
+            <Hyperlink layoutX="14.0" layoutY="29.0" onAction="#actMaanooCom" text="maanoo.com/downloaderm" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>

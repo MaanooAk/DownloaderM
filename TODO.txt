@@ -1,0 +1,2 @@
+Store time inside dtg
+Check crashing on 40 connections

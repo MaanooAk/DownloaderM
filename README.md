@@ -1,6 +1,8 @@
 # DownloaderM
 A Download Manager using multiple connection and multiple buffers to optimise the process of downloading a file. 
 
+[Latest Release](https://github.com/MaanooAk/DownloaderM/releases/latest)
+
 ## Features
 * Multiple connections (multithreading)
 * Multiple buffering (for each connection)

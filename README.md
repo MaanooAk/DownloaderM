@@ -8,6 +8,9 @@ A Download Manager using multiple connection and multiple buffers to optimise th
 * Pause/Resume downloading 
 * HTTP Redirects
 
+### Multiple connections
+Splits the file to be downloaded in multiple parts and opens one connection for each of them. All connections write parallel to the same file.
+
 ### Multiple buffering
 If number of buffers is set to greater than 1 then each connection uses a multiple buffering logic. 
 While one thread downloads data to one buffer, another thread writes data to the disk from an other buffer.

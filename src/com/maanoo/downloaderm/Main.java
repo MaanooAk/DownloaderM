@@ -58,7 +58,7 @@ public class Main extends Application {
         }
         
         if (dtg == null) {
-            System.out.println("Could parse input");
+            System.out.println("Could parse input!");
             Platform.exit();
             return;
         }
@@ -94,13 +94,14 @@ public class Main extends Application {
 
             @Override
             public void onPauseChange(int id, boolean paused) {
-                System.out.println((id+1) + " connection " + (paused ? "paused" : "resumed"));
+                System.out.println((id+1) + " connection " + (paused ? "paused" : "resumed") + ".");
             }
 
             @Override
             public void onSubDone(int id) {
-                System.out.println((id+1) + " connection done");
+                System.out.println((id+1) + " connection done.");
             }
+            
         });
 
         dtg.start();

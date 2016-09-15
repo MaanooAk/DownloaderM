@@ -1,26 +1,26 @@
 # DownloaderM
 A Download Manager using multiple connection and multiple buffers to optimise the process of downloading a file. 
 
-# Features
+## Features
 * Multiple connections (multithreading)
 * Multiple buffering (for each connection)
 * Fail recovery (continue downloading after connection error)
 * Pause/Resume downloading 
 * HTTP Redirects
 
-# Interface
+### Multiple buffering
+If number of buffers is set to greater than 1 then each connection uses a multiple buffering logic. 
+While one thread downloads data to one buffer, another thread writes data to the disk from an other buffer.
+
+### Recovery
+When the downloading is stoped or interrupted a recovery file (`.dmrecovery`) is created. It can be used to resume the donwload even after the termination of the program. On the successful download the recovery file is deleted.
+
+## Interface
 * Pause/Resume/Cancel donwloading
 * Progress bars for each connection
 * Settings menu
 
-# Multiple buffering
-If number of buffers is set to greater than 1 then each connection uses a multiple buffering logic. 
-While one thread downloads data to one buffer, another thread writes data to the disk from an other buffer.
-
-# Recovery
-When the downloading is stoped or interrupted a recovery file (`.dmrecovery`) is created. It can be used to resume the donwload even after the termination of the program. On the successful download the recovery file is deleted.
-
-# Usage as library
+## Usage as library
 Core files are in [com.maanoo.downloaderm.core](/src/com/maanoo/downloaderm/core)
 
 ```java

@@ -1,5 +1,5 @@
 # DownloaderM
-A Download Manager using multiple connection and multiple buffers to optimise the process of downloading a file. 
+A Download Manager using multiple connection and multiple buffers to optimize the process of downloading a file. 
 
 [Latest Release](https://github.com/MaanooAk/DownloaderM/releases/latest)
 
@@ -18,10 +18,10 @@ If number of buffers is set to greater than 1 then each connection uses a multip
 While one thread downloads data to one buffer, another thread writes data to the disk from an other buffer.
 
 ### Recovery
-When the downloading is stoped or interrupted a recovery file (`.dmrecovery`) is created. It can be used to resume the donwload even after the termination of the program. On the successful download the recovery file is deleted.
+When the downloading is stopped or interrupted a recovery file (`.dmrecovery`) is created. It can be used to resume the download even after the termination of the program. On the successful download the recovery file is deleted.
 
 ## Interface
-* Pause/Resume/Cancel donwloading
+* Pause/Resume/Cancel downloading
 * Progress bars for each connection
 * Settings menu
 

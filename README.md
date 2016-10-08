@@ -3,6 +3,8 @@ A Download Manager using multiple connection and multiple buffers to optimize th
 
 [Latest Release](https://github.com/MaanooAk/DownloaderM/releases/latest)
 
+![Screenshot](/assets/dm.2.png)
+
 ## Features
 * Multiple connections (multithreading)
 * Multiple buffering (for each connection)

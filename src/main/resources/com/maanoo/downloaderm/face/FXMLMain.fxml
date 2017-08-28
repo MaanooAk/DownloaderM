@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="190.0" maxWidth="1.7976931348623157E308" minHeight="190.0" minWidth="450.0" prefHeight="190.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLMainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLMainController">
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="tfLink" layoutX="89.0" layoutY="14.0" prefHeight="25.0" prefWidth="321.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
             <TextField fx:id="tfFolder" layoutX="89.0" layoutY="59.0" prefHeight="25.0" prefWidth="314.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="63.0" AnchorPane.topAnchor="59.0" />

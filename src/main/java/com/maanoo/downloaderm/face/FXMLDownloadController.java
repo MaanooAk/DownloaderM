@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 // DownloaderM Copyright (c) 2014-2017 DownloaderM author list (see README.md)
 
 package com.maanoo.downloaderm.face;
 
-import com.maanoo.downloaderm.Defs;
-import com.maanoo.downloaderm.Settings;
-import com.maanoo.downloaderm.core.SpeedMonitor;
-import com.maanoo.downloaderm.core.DownloadEngine;
-import com.maanoo.downloaderm.core.DownloadStatus;
-import com.maanoo.downloaderm.core.DownloadThreadGroup;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.maanoo.downloaderm.Defs;
+import com.maanoo.downloaderm.Settings;
+import com.maanoo.downloaderm.core.DownloadEngine;
+import com.maanoo.downloaderm.core.DownloadStatus;
+import com.maanoo.downloaderm.core.DownloadThreadGroup;
+import com.maanoo.downloaderm.core.SpeedMonitor;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,13 +24,14 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+
 /**
  * FXML Controller class
  *
  * @author MaanooAk
  */
 public class FXMLDownloadController extends FXMLController {
-        
+
     @FXML
     private Label laStatus;
     @FXML
@@ -52,50 +50,49 @@ public class FXMLDownloadController extends FXMLController {
     private Button butCancel;
 
     private ProgressBar progs[];
-    
+
     private DownloadThreadGroup dtg;
     private DownloadStatus status;
-    
+
     private Timer updateTimer;
     private SpeedMonitor sm;
-    
+
     private long dateS, dateE;
     private boolean canceled;
     private boolean exiting;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         dtg = DownloadEngine.dtg;
         status = dtg.getStatus();
-        
+
         progHolder.getChildren().clear();
-                
-        //butPause.setText("\u23F8");
+
+        // butPause.setText("\u23F8");
         butPause.setDisable(true);
-        
+
         // ===
-        
+
         dtg.start();
-        
-        dateS = System.currentTimeMillis();        
+
+        dateS = System.currentTimeMillis();
         sm = new SpeedMonitor.Group(dateS, 0, 3);
-        
+
         canceled = false;
         exiting = false;
-        
-                
+
     }
 
     @Override
     public void onStageChange(Stage stage) {
-        
+
         stage.setOnCloseRequest((WindowEvent event) -> {
             event.consume();
 
-            if(exiting) {
+            if (exiting) {
                 Platform.exit();
-            }else if(status.getState() == DownloadStatus.State.Downloading) {
+            } else if (status.getState() == DownloadStatus.State.Downloading) {
 
             } else if (status.getState() == DownloadStatus.State.Pause
                     || status.getState() == DownloadStatus.State.Pausing
@@ -105,7 +102,7 @@ public class FXMLDownloadController extends FXMLController {
             }
 
         });
-        
+
         dtg.getStatus().addListener(new DownloadStatus.Listener() {
 
             @Override
@@ -116,7 +113,7 @@ public class FXMLDownloadController extends FXMLController {
             @Override
             public void onPauseChange(int id, boolean paused) {
                 Platform.runLater(() -> {
-                    if(paused) progs[id].getStyleClass().add("pause");
+                    if (paused) progs[id].getStyleClass().add("pause");
                     else progs[id].getStyleClass().remove("pause");
                 });
             }
@@ -130,238 +127,238 @@ public class FXMLDownloadController extends FXMLController {
             }
         });
     }
-    
-    protected void updateState(DownloadStatus.State state) {
-        
-        if(exiting) return;
-        
-        butPause.setDisable(!(state == DownloadStatus.State.Downloading || state == DownloadStatus.State.Pause));
-        butCancel.setDisable(!(state == DownloadStatus.State.Downloading || state == DownloadStatus.State.Pause || state == DownloadStatus.State.Preparing));
 
-        switch(state) {
+    protected void updateState(DownloadStatus.State state) {
+
+        if (exiting) return;
+
+        butPause.setDisable(!(state == DownloadStatus.State.Downloading || state == DownloadStatus.State.Pause));
+        butCancel.setDisable(!(state == DownloadStatus.State.Downloading || state == DownloadStatus.State.Pause
+                || state == DownloadStatus.State.Preparing));
+
+        switch (state) {
         case Preparing:
-            
+
             setTitle("Preparing");
             laPer.setText("");
             laBytes.setText("");
             laTime.setText("");
-            
+
             break;
         case Downloading:
-            
+
             setTitle("Downloading");
             laPer.setText("");
             laBytes.setText("");
             laTime.setText("");
-            
+
             // set up sub progress bars
-            
+
             progs = new ProgressBar[status.connections];
             progHolder.getChildren().clear();
 
-            if(progs.length > 1) {
-            
-                for(int i=0; i<progs.length; i++) {
+            if (progs.length > 1) {
 
-                    ProgressBar pb = new ProgressBar(0);  
+                for (int i = 0; i < progs.length; i++) {
+
+                    final ProgressBar pb = new ProgressBar(0);
                     pb.prefWidthProperty().bind(progHolder.widthProperty());
                     pb.getStyleClass().add("sub");
 
-                    progs[i] = pb;            
+                    progs[i] = pb;
                     progHolder.getChildren().add(pb);
                 }
 
                 progs[0].getStyleClass().add("first");
-                progs[progs.length-1].getStyleClass().add("last");
-            
-            }else{
-                
-                ProgressBar pb = new ProgressBar(0);  
+                progs[progs.length - 1].getStyleClass().add("last");
+
+            } else {
+
+                final ProgressBar pb = new ProgressBar(0);
                 pb.prefWidthProperty().bind(progHolder.widthProperty());
 
-                progs[0] = pb;            
+                progs[0] = pb;
                 progHolder.getChildren().add(pb);
-                
+
             }
-            
+
             break;
-        case Done:            
-            
+        case Done:
+
             dateE = System.currentTimeMillis();
 
-            long time = System.currentTimeMillis() - dateS;
-            long seconds = time / (1000);
+            final long time = System.currentTimeMillis() - dateS;
+            final long seconds = time / (1000);
 
-            if(status.progMainMax < 1) status.progMainMax = status.getProgMain();
+            if (status.progMainMax < 1) status.progMainMax = status.getProgMain();
 
             setTitle("Done");
             laPer.setText("100 %");
-            laTime.setText(TextUtils.time(time) + " - " + TextUtils.speed((status.progMainMax)/time));
+            laTime.setText(TextUtils.time(time) + " - " + TextUtils.speed((status.progMainMax) / time));
             laBytes.setText(TextUtils.dash(status.getProgMain(), status.progMainMax));
-            
+
             progMain.setProgress(1);
             progMain.getStyleClass().add("done");
-            
+
             DownloadEngine.deleteRecovery(dtg);
-            
+
             exiting = true;
             Utils.exitInMilliseconds(3000);
 
             break;
         case Error:
-            
-            if(!dtg.isClosing()) {
-            
+
+            if (!dtg.isClosing()) {
+
                 setTitle("Error");
                 laTime.setText(status.getError());
 
-                if(status.getProgMain() > 0) {
+                if (status.getProgMain() > 0) {
 
                     DownloadEngine.storeRecovery(dtg);
 
                     dtg.closeAll();
 
-                }else{
+                } else {
 
                     exiting = true;
-                    Utils.goBackInMilliseconds(3000);                
+                    Utils.goBackInMilliseconds(3000);
                 }
-            
+
             }
             break;
         case Pausing:
-            
+
             setTitle("Pausing");
-            
+
             DownloadEngine.storeRecovery(dtg);
-            
+
             break;
         case Pause:
-            
+
             setTitle("Pause");
-            
+
             DownloadEngine.storeRecovery(dtg);
-            
+
             break;
         case Resuming:
-            
+
             setTitle("Resuming");
-                                    
+
             break;
         case Closing:
-            
+
             setTitle("Closing");
-            
+
             break;
         case Closed:
-            
+
             setTitle("Closed");
-            
-            if(canceled) {
+
+            if (canceled) {
                 DownloadEngine.deteleDownloaded(dtg);
             }
-            
+
             exiting = true;
             Utils.exitInMilliseconds(3000);
         }
-        
-        if(status.getState().isUpdating()) {            
-            
+
+        if (status.getState().isUpdating()) {
+
             // set update loop
-            
+
             updateTimer = new Timer(true);
             updateTimer.schedule(new TimerTask() {
+
                 @Override
                 public void run() {
                     Platform.runLater(() -> update());
                 }
-            }, Settings.getInt(Settings.Name.RefreshRate)/2, Settings.getInt(Settings.Name.RefreshRate));
+            }, Settings.getInt(Settings.Name.RefreshRate) / 2, Settings.getInt(Settings.Name.RefreshRate));
             updateTimer.schedule(new TimerTask() {
+
                 @Override
                 public void run() {
                     Platform.runLater(() -> updateSpeed());
                 }
-            }, Defs.REFRESH_RATE_SPEED/2, Defs.REFRESH_RATE_SPEED);
-            
+            }, Defs.REFRESH_RATE_SPEED / 2, Defs.REFRESH_RATE_SPEED);
+
         }
-        
+
     }
-    
+
     private void setTitle(String text) {
         stage.setTitle(text);
         laStatus.setText(text);
     }
-        
+
     protected void update() {
-        
-        if(!status.getState().isUpdating()) {
+
+        if (!status.getState().isUpdating()) {
             updateTimer.cancel();
             return;
         }
-        
-        if(status.progMainMax > 0) {
-                      
+
+        if (status.progMainMax > 0) {
+
             laPer.setText(TextUtils.percent(status.getProgMain(), status.progMainMax));
             laBytes.setText(TextUtils.dash(status.getProgMain(), status.progMainMax));
-            
-            if(status.getState() == DownloadStatus.State.Downloading) 
-                stage.setTitle(laPer.getText());
-            
+
+            if (status.getState() == DownloadStatus.State.Downloading) stage.setTitle(laPer.getText());
+
             progMain.setProgress(status.getProgressMain());
             for (int i = 0; i < progs.length; i++) {
                 progs[i].setProgress(status.getProgress(i));
             }
 
-            long speed = sm.getSpeed();
-            if(speed > 0) {
-                long time = ((status.progMainMax - status.getProgMain())) / speed;
+            final long speed = sm.getSpeed();
+            if (speed > 0) {
+                final long time = ((status.progMainMax - status.getProgMain())) / speed;
                 laTime.setText(TextUtils.timeRounded(time) + " - " + TextUtils.speed(speed));
-            }else{
+            } else {
                 laTime.setText("");
             }
 
-        }else{
+        } else {
 
             laBytes.setText(TextUtils.integer(status.getProgMain()) + " / ?");
 
         }
-        
+
     }
-    
+
     protected void updateSpeed() {
         sm.give(System.currentTimeMillis(), status.getProgMain());
     }
-    
+
     @FXML
     private void actPause(ActionEvent event) {
-        
-        if(status.getState() == DownloadStatus.State.Downloading) {
-            
+
+        if (status.getState() == DownloadStatus.State.Downloading) {
+
             butPause.setDisable(true);
             dtg.stopWorking();
-            
-        }else if(status.getState() == DownloadStatus.State.Pause) {
-            
+
+        } else if (status.getState() == DownloadStatus.State.Pause) {
+
             butPause.setDisable(true);
             dtg.resumeWorking();
         }
-        
+
     }
 
     @FXML
     private void actCancel(ActionEvent event) {
-        
-        if (status.getState() == DownloadStatus.State.Preparing
-                || status.getState() == DownloadStatus.State.Downloading
+
+        if (status.getState() == DownloadStatus.State.Preparing || status.getState() == DownloadStatus.State.Downloading
                 || status.getState() == DownloadStatus.State.Pause) {
-            
+
             canceled = true;
-            
-            butCancel.setDisable(true);            
-            dtg.closeAll();            
+
+            butCancel.setDisable(true);
+            dtg.closeAll();
         }
-                
+
     }
-    
-    
+
 }

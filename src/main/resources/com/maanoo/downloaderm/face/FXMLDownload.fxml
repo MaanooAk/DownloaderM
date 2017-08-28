@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="125.0" maxWidth="1.7976931348623157E308" minHeight="125.0" minWidth="200.0" prefHeight="125.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLDownloadController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="150.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLDownloadController">
    <center>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>

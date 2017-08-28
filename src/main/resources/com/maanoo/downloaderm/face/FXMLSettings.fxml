@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="320.0" maxWidth="550.0" minHeight="320.0" minWidth="450.0" prefHeight="320.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLSettingsController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="275.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.maanoo.downloaderm.face.FXMLSettingsController">
    <center>
       <GridPane hgap="14.0" BorderPane.alignment="CENTER">
         <columnConstraints>

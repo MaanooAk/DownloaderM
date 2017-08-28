@@ -81,6 +81,7 @@ public class StagesManager {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(cl.getResource("style.css").toExternalForm());
         
+        /*
         stage.setOnShown((WindowEvent event) -> {
 
             double offH = stage.getHeight() - scene.getHeight();
@@ -91,6 +92,7 @@ public class StagesManager {
             stage.setMaxWidth(root.getMaxWidth()+offW);
             stage.setMaxHeight(root.getMaxHeight()+offH);
         });
+        */
         
         
         if(parent != null) stage.initOwner(parent);

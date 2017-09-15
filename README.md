@@ -7,6 +7,7 @@ A Download Manager using multiple connection and multiple buffers to optimize th
 ![Screenshot](/assets/dm.2.png)
 
 ## Features
+
 * Multiple connections (multithreading)
 * Multiple buffering (for each connection)
 * Fail recovery (continue downloading after connection error)
@@ -14,52 +15,77 @@ A Download Manager using multiple connection and multiple buffers to optimize th
 * HTTP Redirects
 
 ### Multiple connections
+
 Splits the file to be downloaded in multiple parts and opens one connection for each of them. All connections write parallel to the same file.
 
 ### Multiple buffering
+
 If number of buffers is set to greater than 1 then each connection uses a multiple buffering logic. 
 While one thread downloads data to one buffer, another thread writes data to the disk from an other buffer.
 
 ### Recovery
+
 When the downloading is stopped or interrupted a recovery file (`.dmrecovery`) is created. It can be used to resume the download even after the termination of the program. On the successful download the recovery file is deleted.
 
 ## Interface
+
 * Pause/Resume/Cancel downloading
 * Progress bars for each connection
 * Settings menu
 
-## Usage as library
-Core files are in [com.maanoo.downloaderm.core](/src/com/maanoo/downloaderm/core)
+## Command line usage
+
+Start download:
+
+```
+java -jar dm.jar url file
+```
+
+Start recovery download:
+
+```
+java -jar dm.jar -r recovery_file
+```
+
+## Library usage
+
+Core files are in [com.maanoo.downloaderm.core](/src/main/java/com/maanoo/downloaderm/core)
+
+Start download:
 
 ```java
 DownloadThreadGroup dtg = DownloadEngine.download(url, file);
 dtg.start();
 ```
+
+Start download with listeners:
 
 ```java
 DownloadThreadGroup dtg = DownloadEngine.download(url, file);
 
 dtg.getStatus().addListener(new DownloadStatus.Listener() {
 
-  @Override
-  public void onStateChange(DownloadStatus.State state) {
-    
-  }
+    @Override
+    public void onStateChange(DownloadStatus.State state) {
 
-  @Override
-  public void onPauseChange(int id, boolean paused) {
-    
-  }
+    }
 
-  @Override
-  public void onSubDone(int id) {
-    
-  }
-  
+    @Override
+    public void onPauseChange(int id, boolean paused) {
+
+    }
+
+    @Override
+    public void onSubDone(int id) {
+
+    }
+
 });
 
 dtg.start();
 ```
+
+Start recovery download:
 
 ```java
 DownloadThreadGroup dtg = DownloadEngine.recovery(file);

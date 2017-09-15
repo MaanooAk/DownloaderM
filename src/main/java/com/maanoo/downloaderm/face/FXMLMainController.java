@@ -97,7 +97,7 @@ public class FXMLMainController extends FXMLController {
             return;
         }
 
-        if (DownloadEngine.download(url, file) == null) return;
+        if (DownloadEngine.download(url, file, Settings.createDownloadConfig()) == null) return;
 
         StagesManager.showDownloading((Stage) butDownload.getScene().getWindow());
 
@@ -117,7 +117,7 @@ public class FXMLMainController extends FXMLController {
 
         if (f == null || !f.exists()) return;
 
-        if (DownloadEngine.recovery(f) == null) return;
+        if (DownloadEngine.recovery(f, Settings.createDownloadConfig()) == null) return;
 
         StagesManager.showDownloading((Stage) butDownload.getScene().getWindow());
 

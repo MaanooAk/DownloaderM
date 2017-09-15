@@ -64,7 +64,7 @@ public class FXMLDownloadController extends FXMLController {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        dtg = DownloadEngine.dtg;
+        dtg = DownloadEngine.getActiveDownloadThreadGroup();
         status = dtg.getStatus();
 
         progHolder.getChildren().clear();
@@ -188,7 +188,6 @@ public class FXMLDownloadController extends FXMLController {
             dateE = System.currentTimeMillis();
 
             final long time = System.currentTimeMillis() - dateS;
-            final long seconds = time / (1000);
 
             if (status.progMainMax < 1) status.progMainMax = status.getProgMain();
 

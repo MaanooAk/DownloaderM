@@ -9,24 +9,25 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 /**
  *
  * @author MaanooAk
  */
 public class DownloadThread extends Thread {
-        
+
     protected final int id;
-    
+
     protected final URL url;
     protected final File file;
     protected final long start;
     protected final long end;
     protected final long size;
-    
+
     protected final DownloadStatus status;
-    
+
     protected final int buffersize;
-    
+
     protected long now;
     protected boolean done;
     protected boolean working;
@@ -41,32 +42,32 @@ public class DownloadThread extends Thread {
         this.end = end;
         this.status = status;
         this.buffersize = buffersize;
-        
+
         size = end - start;
         status.progsMax[id] = size;
-        
+
         now = start;
         done = false;
         working = true;
     }
 
     public void setNow(long now) {
-        long dnow = now - this.now;        
+        final long dnow = now - this.now;
         this.now = now;
-        
+
         status.addProgMain(dnow);
         status.progs[id] += dnow;
     }
-    
+
     @Override
     public final void run() {
-        
-        if(now > end) {
+
+        if (now > end) {
             done = true;
             status.setDone(id);
             return;
         }
-        
+
         transferData(createConnection());
     }
 
@@ -76,102 +77,102 @@ public class DownloadThread extends Thread {
         while (connection == null) {
             try {
                 connection = Utils.openConnection(url);
-                if(end < Long.MAX_VALUE) connection.setRequestProperty("Range", "bytes=" + now + "-" + end);
+                if (end < Long.MAX_VALUE) connection.setRequestProperty("Range", "bytes=" + now + "-" + end);
                 connection.connect();
 
-                int response = connection.getResponseCode();
+                final int response = connection.getResponseCode();
                 if (response < 200 || response >= 300) {
                     throw new Exception("ResponseCode: " + response);
                 }
 
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 // retry after 500 ms
-                
-                if(connection != null) {
+
+                if (connection != null) {
                     connection.disconnect();
                     connection = null;
                 }
-                
+
                 try {
                     Thread.sleep(500);
-                } catch (InterruptedException ex1) { }
+                } catch (final InterruptedException ex1) {}
             }
         }
-        
+
         return connection;
     }
-    
+
     @SuppressWarnings("ConvertToTryWithResources")
     protected void transferData(HttpURLConnection connection) {
-        
+
         try {
-            BufferedInputStream in = new BufferedInputStream(connection.getInputStream(), buffersize);
-            
-            if(end == Long.MAX_VALUE) {
+            final BufferedInputStream in = new BufferedInputStream(connection.getInputStream(), buffersize);
+
+            if (end == Long.MAX_VALUE) {
                 long skip = now;
-                while(skip > 0) {
+                while (skip > 0) {
                     skip -= in.skip(skip);
                 }
             }
-            
-            RandomAccessFile out = new RandomAccessFile(file, "rw");
+
+            final RandomAccessFile out = new RandomAccessFile(file, "rw");
             out.seek(now);
-            
+
             int readed;
-            byte buffer[] = new byte[buffersize];
-            
-            while((readed = in.read(buffer)) != -1) {
+            final byte buffer[] = new byte[buffersize];
+
+            while ((readed = in.read(buffer)) != -1) {
                 out.write(buffer, 0, readed);
-                
+
                 status.addProgMain(readed);
                 status.progs[id] += readed;
                 now += readed;
-                
-                if(!working) {                   
+
+                if (!working) {
                     status.setPaused(id, true);
-                    while(!working) {
-                        synchronized(this) {
+                    while (!working) {
+                        synchronized (this) {
                             try {
                                 wait();
-                            } catch (InterruptedException ex) { }
+                            } catch (final InterruptedException ex) {}
                         }
                     }
                     status.setPaused(id, false);
                 }
-                
-                if(closing) break;
+
+                if (closing) break;
             }
-            
+
             in.close();
             connection.disconnect();
             out.close();
-            
+
             done = true;
             status.setDone(id);
-            
-        } catch (IOException ex) {            
+
+        } catch (final IOException ex) {
             status.error("Data transfering failed (" + Utils.getExceptionName(ex) + ")");
         }
-        
+
     }
 
     public void stopWorking() {
         working = false;
     }
-    
+
     public void resumeWorking() {
         working = true;
-        synchronized(this) {
+        synchronized (this) {
             notifyAll();
         }
     }
-    
+
     public void closeAll() {
         closing = true;
     }
-    
+
     public final boolean isDone() {
         return done;
     }
-    
+
 }

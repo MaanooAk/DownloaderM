@@ -2,18 +2,21 @@
 
 package com.maanoo.downloaderm;
 
+import java.io.File;
+
 import com.maanoo.downloaderm.core.DownloadEngine;
 import com.maanoo.downloaderm.core.DownloadStatus;
 import com.maanoo.downloaderm.core.DownloadThreadGroup;
-import java.io.File;
+
 import javafx.application.Platform;
+
 
 /**
  *
  * @author MaanooAk
  */
 public class NoWindow {
-    
+
     public static void launch(String[] args) {
 
         if (args.length != 2) {
@@ -24,13 +27,13 @@ public class NoWindow {
         }
 
         final DownloadThreadGroup dtg;
-        
-        if(args[0].equals("-r")) {
-            dtg = DownloadEngine.recovery(new File(args[1]));
-        }else{
-            dtg = DownloadEngine.download(args[0], args[1]);
+
+        if (args[0].equals("-r")) {
+            dtg = DownloadEngine.recovery(new File(args[1]), Settings.createDownloadConfig());
+        } else {
+            dtg = DownloadEngine.download(args[0], args[1], Settings.createDownloadConfig());
         }
-        
+
         if (dtg == null) {
             System.out.println("Could parse input!");
             Platform.exit();
@@ -43,7 +46,7 @@ public class NoWindow {
             public void onStateChange(DownloadStatus.State state) {
 
                 System.out.println("- " + state.toString());
-                
+
                 switch (state) {
                 case Downloading:
                     System.out.println(dtg.getConnections() + " connections opened");
@@ -63,23 +66,31 @@ public class NoWindow {
                     DownloadEngine.deleteRecovery(dtg);
                     Platform.exit();
                     break;
+                case Closing:
+                    break;
+                case Pausing:
+                    break;
+                case Preparing:
+                    break;
+                case Resuming:
+                    break;
                 }
             }
 
             @Override
             public void onPauseChange(int id, boolean paused) {
-                System.out.println((id+1) + " connection " + (paused ? "paused" : "resumed") + ".");
+                System.out.println((id + 1) + " connection " + (paused ? "paused" : "resumed") + ".");
             }
 
             @Override
             public void onSubDone(int id) {
-                System.out.println((id+1) + " connection done.");
+                System.out.println((id + 1) + " connection done.");
             }
-            
+
         });
 
         dtg.start();
 
     }
-    
+
 }

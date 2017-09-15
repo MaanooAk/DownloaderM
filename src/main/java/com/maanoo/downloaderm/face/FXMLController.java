@@ -5,11 +5,12 @@ package com.maanoo.downloaderm.face;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
+
 /**
  *
  * @author MaanooAk
  */
-public abstract class FXMLController implements Initializable{
+public abstract class FXMLController implements Initializable {
 
     protected Stage stage;
 
@@ -17,6 +18,6 @@ public abstract class FXMLController implements Initializable{
         this.stage = stage;
         onStageChange(stage);
     }
-    
+
     public abstract void onStageChange(Stage stage);
 }

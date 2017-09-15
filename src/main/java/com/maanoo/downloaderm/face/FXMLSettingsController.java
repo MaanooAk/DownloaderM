@@ -114,6 +114,7 @@ public class FXMLSettingsController extends FXMLController {
     }
 
     private void close() {
+
         ((Stage) tfFolder.getScene().getWindow()).close();
     }
 
